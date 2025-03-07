@@ -2,29 +2,34 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+//Clase que reperesenta una reservacion con lo siguiente(nombre, asiento)
 class Reservacion {
     String nombre;
     int asiento;
 
+//Constructor de la clase anterior 
     public Reservacion(String nombre, int asiento) {
         this.nombre = nombre;
         this.asiento = asiento;
     }
-
+//Metodo para mostrar las reservaciones
     public String toString() {
         return "Cliente: " + nombre + " - Asiento #" + asiento;
     }
 }
 
+//Clase que controla las reservaciones utilizando una cola(FIFO)
 public class Gestor_Boletos {
-    private Queue<Reservacion> reservaciones = new LinkedList<>();
+    private Queue<Reservacion> reservaciones = new LinkedList<>();//COLA
     private int totalAsientos;
     private static Scanner scanner = new Scanner(System.in);
 
+
+//Constructor que inicia el total de asientos
     public Gestor_Boletos(int totalAsientos) {
         this.totalAsientos = totalAsientos;
     }
-
+//Metodo para registrar una nueva reservacioncon con respectivo asiento ya sea de modo manual o automatico.
     public void registrar_la_Reservacion(String nombre, Integer asiento) {
         if (asiento == null) {
             asiento = asignarMejorAsiento();
@@ -40,11 +45,13 @@ public class Gestor_Boletos {
         System.out.println("La reservación ha sido correctamente agregada: " + nombre + " - Asiento #" + asiento);
     }
 
+//Metodo para poder cancelar alguna reservación por número de asiento
     public void cancelación_Reservacion(int asiento) {
         boolean encontrada = reservaciones.removeIf(r -> r.asiento == asiento);
         System.out.println(encontrada ? "La reservación ha sido correctamente cancelada." : "No se encontró el asiento #" + asiento);
     }
 
+//Metodo que verifica si el asiento esta disponible o no
     public boolean verificar_Asiento(int asiento) {
         for (Reservacion r : reservaciones) {
             if (r.asiento == asiento) return true;
@@ -52,6 +59,8 @@ public class Gestor_Boletos {
         return false;
     }
 
+
+//Metodo que asigna el mejor asiento
     private int asignarMejorAsiento() {
         for (int i = 1; i <= totalAsientos; i++) {
             if (!verificar_Asiento(i)) {
@@ -61,6 +70,7 @@ public class Gestor_Boletos {
         return -1; // No hay asientos disponibles
     }
 
+//metodo que muestra todas las reservaciones registradas
     public void mostrar_Reservaciones() {
         if (reservaciones.isEmpty()) {
             System.out.println("Lo siento, no hay reservaciones.");
@@ -72,11 +82,12 @@ public class Gestor_Boletos {
         }
     }
 
+//Metodo que permite que le programa sea interactivo
     public static void main(String[] args) {
         System.out.print("Ingrese el número total de asientos disponibles: ");
         int totalAsientos = scanner.nextInt();
         Gestor_Boletos gestor = new Gestor_Boletos(totalAsientos);
-
+//Menu de opciones
         int opcion;
         while (true) {
             System.out.println("\n=== Gestor de Reservaciones ===");

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+//clase sonde estara el registro de las misisones creadas
 public class Diario_Aventurero {
     private List<String> misiones = new ArrayList<>();
     private static final String ARCHIVO = "misiones.txt";
@@ -10,13 +11,13 @@ public class Diario_Aventurero {
     public Diario_Aventurero() {
         cargarMisiones();
     }
-
+//contructor que permite que se ingrese una nueva lista y esta se agregue
     public void registro_de_Mision(String mision) {
         misiones.add(mision);
         System.out.println("Misión agregada: " + mision);
         guardarMisiones();
     }
-
+//Metodo para poder eliminar alguna de las misiones ya registradas
     public void eliminar_la_Ultima_Mision() {
         if (!misiones.isEmpty()) {
             System.out.println("Eliminando: " + misiones.remove(misiones.size() - 1));
@@ -25,7 +26,7 @@ public class Diario_Aventurero {
             System.out.println("No hay misiones.");
         }
     }
-
+//Metodo que mostrara todas las misiones agregadas
     public void mostrar_las_Misiones() {
         if (misiones.isEmpty()) {
             System.out.println("No hay misiones.");
@@ -36,11 +37,11 @@ public class Diario_Aventurero {
             }
         }
     }
-
+//Metodo que permite buscar la mision que el usuario necesite
     public boolean buscarMision(String mision) {
         return misiones.contains(mision);
     }
-
+//Metodo para poder guardar las misiones en un archivo de texto 
     private void guardarMisiones() {
         try (PrintWriter escritor = new PrintWriter(new FileWriter(ARCHIVO))) {
             for (String m : misiones) escritor.println(m);
@@ -48,7 +49,7 @@ public class Diario_Aventurero {
             System.out.println("No se pudo guardar.");
         }
     }
-
+//Metodo que permite cargar esas msisiones en el archivo de texto
     private void cargarMisiones() {
         File archivo = new File(ARCHIVO);
         if (archivo.exists()) {
@@ -60,13 +61,13 @@ public class Diario_Aventurero {
             }
         }
     }
-
+//Este es el metodo principal que hace al programa interactivo
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Diario_Aventurero diario = new Diario_Aventurero();
         int opcion;
-
-        while (true) {
+//Menu
+            while (true) {
             System.out.println("\n=== Diario Aventurero ===");
             System.out.println("1. Agregar tu misión");
             System.out.println("2. Eliminar la última misión registrada");
@@ -96,6 +97,6 @@ public class Diario_Aventurero {
             }
         }
 
-        scanner.close();
+        scanner.close();//cerramos el scanner
     }
 }
